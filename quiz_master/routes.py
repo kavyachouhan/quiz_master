@@ -1,4 +1,4 @@
-from app import app
+from quiz_master.app import app
 from flask import render_template, request, redirect, url_for, flash, session
 from quiz_master.models.models import *
 from quiz_master.extensions import db
