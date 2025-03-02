@@ -1,6 +1,6 @@
 from flask_sqlalchemy import SQLAlchemy
 from werkzeug.security import generate_password_hash, check_password_hash
-from extensions import db
+from quiz_master.extensions import db
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
