@@ -1,5 +1,5 @@
 from flask import Flask, render_template
-from .extensions import db
+from quiz_master.extensions import db  # Updated import
 from dotenv import load_dotenv
 import os
 
@@ -14,7 +14,7 @@ app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 db.init_app(app)
 
 with app.app_context():
-    from models.models import *
+    from quiz_master.models.models import *  # Updated import
     db.create_all()
 
     admin_role = Admin.query.filter_by(username = 'admin').first()
@@ -27,6 +27,5 @@ with app.app_context():
         db.session.add(admin_role)
     db.session.commit()
 
-from api import *
-
-from routes import *
+from quiz_master.api import *  # Updated import
+from quiz_master.routes import *  # Updated import

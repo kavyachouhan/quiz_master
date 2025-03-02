@@ -5,7 +5,9 @@
             "src": "quiz_master/app.py",
             "use": "@vercel/python",
             "config": {
-                "includeFiles": ["quiz_master/**"]
+                "maxLambdaSize": "15mb",
+                "runtime": "python3.9",
+                "includeFiles": ["quiz_master/**/*"]
             }
         }
     ],
