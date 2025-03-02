@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: quiz-master
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn quiz_master.app:app
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.9.0
+      - key: SUPABASE_DB_URL
+        sync: false
+      - key: SECRET_KEY
+        sync: false
+      - key: SQLALCHEMY_TRACK_MODIFICATIONS
+        value: "False"

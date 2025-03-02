@@ -5,3 +5,4 @@ flask_restful
 python-dotenv 
 python-dateutil
 psycopg2-binary
+gunicorn
