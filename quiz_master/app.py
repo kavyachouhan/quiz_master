@@ -1,5 +1,5 @@
 from flask import Flask, render_template
-from extensions import db
+from .extensions import db
 from dotenv import load_dotenv
 import os
 

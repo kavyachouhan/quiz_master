@@ -11,5 +11,10 @@
             "src": "/(.*)",
             "dest": "quiz_master/app.py"
         }
-    ]
+    ],
+    "functions": {
+        "quiz_master/app.py": {
+            "includeFiles": "quiz_master/**"
+        }
+    }
 }
