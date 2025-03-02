@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %} {% endblock title %} - Quiz Master</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{url_for('static', filename='css/admin_styles.css')}}">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-dark navbar-custom fixed-top">
+        <div class="container-fluid px-3">
+            <div class="d-flex align-items-center gap-3">
+                <button class="btn btn-link text-white p-0 sidebar-toggle" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebar">
+                    <i class="fas fa-bars fa-lg"></i>
+                </button>
+                <a href="/admin/dashboard" class="navbar-brand fw-bold m-0">Quiz Master</a>
+            </div>
+            <div class="d-flex align-items-center gap-3">
+              <span class="text-white me-3">Hi, Admin</span>
+              <a class="nav-link-logout" href="/logout"><i class="fas fa-sign-out-alt me-2"></i>Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Sidebar -->
+    <div class="offcanvas offcanvas-start" tabindex="-1" id="sidebar">
+        <div class="sidebar-nav">
+            <a href="/admin/dashboard" class="sidebar-link active"><i class="fas fa-tachometer-alt"></i>Dashboard</a>
+            <a href="/admin/subjects" class="sidebar-link"><i class="fas fa-book"></i>Subjects</a>
+            <a href="/admin/chapters" class="sidebar-link"><i class="fas fa-book-open"></i>Chapters</a>
+            <a href="/admin/quizzes" class="sidebar-link"><i class="fas fa-question-circle"></i>Quizzes</a>
+            <a href="/admin/summary" class="sidebar-link"><i class="fas fa-chart-bar"></i>Summary</a>
+        </div>
+    </div>
+
+    {% block content %}
+  
+    {% endblock content %}
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

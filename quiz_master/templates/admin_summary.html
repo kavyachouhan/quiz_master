@@ -1,0 +1,148 @@
+{% extends 'admin_base.html' %}
+{% block title %}Summary{% endblock title %}
+{% block content %}
+
+<div class="main-content" style="margin-top: var(--navbar-height);">
+  {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+          {% for category, message in messages %}
+              <div class="alert alert-{{ category }} fade-out">
+                  {{ message }}
+              </div>
+          {% endfor %}
+      {% endif %}
+  {% endwith %}
+
+  <!-- Header Section -->
+  <div class="d-flex justify-content-between align-items-center mb-4">
+      <h4 class="mb-0">Summary</h4>
+  </div>
+
+  <!-- Charts Grid -->
+  <div class="row g-4">
+    <!-- Quiz Attempts Chart -->
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Quiz Attempts Distribution</h5>
+          <canvas id="quizAttemptsChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- Average Scores Chart -->
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Average Scores by Subject</h5>
+          <canvas id="avgScoresChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+    <!-- User Registration Chart -->
+    <div class="col-md-6">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">User Registrations (Last 7 days)</h5>
+          <canvas id="userRegistrationsChart"></canvas>
+        </div>
+      </div>
+    </div>
+
+      <!-- User Qualification Distribution -->
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Users by Qualification</h5>
+            <canvas id="qualificationChart"></canvas>
+          </div>
+        </div>
+      </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+<script>
+  // Quiz Attempts Distribution
+  new Chart(document.getElementById('quizAttemptsChart'), {
+    type: 'pie',
+    data: {
+      labels: ['Passed', 'Failed', 'Not Attempted'],
+      datasets: [{
+        data: [{{ stats.passed_count }}, {{ stats.failed_count }}, {{ stats.not_attempted_count }}],
+        backgroundColor: ['#28a745', '#dc3545', '#6c757d']
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'bottom'
+        }
+      }
+    }
+  });
+
+  // Average Scores by Subject
+  new Chart(document.getElementById('avgScoresChart'), {
+    type: 'bar',
+    data: {
+      labels: {{ stats.subject_names|safe }},
+      datasets: [{
+        label: 'Average Score',
+        data: {{ stats.subject_scores|safe }},
+        backgroundColor: '#007bff'
+      }]
+    },
+    options: {
+      responsive: true,
+    }
+  });
+
+  // User Registration Trend
+  new Chart(document.getElementById('userRegistrationsChart'), {
+    type: 'line',
+    data: {
+      labels: {{ stats.days|safe }},
+      datasets: [{
+        label: 'New Users',
+        data: {{ stats.user_counts|safe }},
+        borderColor: '#20c997',
+        tension: 0.1
+      }]
+    },
+    options: {
+      responsive: true,
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: {
+            stepSize: 1
+          }
+        }
+      }
+    }
+  });
+
+  // User Qualification Distribution
+  new Chart(document.getElementById('qualificationChart'), {
+    type: 'doughnut',
+    data: {
+      labels: {{ stats.qualification_labels|safe }},
+      datasets: [{
+        data: {{ stats.qualification_counts|safe }},
+        backgroundColor: ['#fd7e14', '#6f42c1', '#20c997', '#0dcaf0', '#ffc107']
+      }]
+    },
+    options: {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'bottom'
+        }
+      }
+    }
+  });
+</script>
+{% endblock content %}

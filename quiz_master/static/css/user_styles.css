@@ -1,0 +1,175 @@
+:root {
+    --offcanvas-width: 250px;
+    --navbar-height: 60px;
+}
+
+.navbar-custom {
+    background-color: #2C3E50;
+    height: var(--navbar-height);
+    padding: 0 1rem;
+}
+
+.offcanvas {
+    width: var(--offcanvas-width) !important;
+}
+
+.offcanvas-start {
+    top: var(--navbar-height) !important;
+    height: calc(100% - var(--navbar-height)) !important;
+}
+
+.sidebar-nav {
+    background-color: #2C3E50;
+    height: 100%;
+}
+
+.sidebar-link {
+    color: white;
+    text-decoration: none;
+    padding: 0.8rem 1.5rem;
+    display: block;
+    transition: all 0.3s;
+}
+
+.sidebar-link:hover {
+    background-color: #34495E;
+    color: #3498DB;
+}
+
+.sidebar-link i {
+    width: 24px;
+    margin-right: 8px;
+}
+
+.main-content {
+    margin-left: 0;
+    padding: 1rem;
+    transition: margin-left 0.3s ease;
+}
+
+@media (min-width: 992px) {
+    body {
+        overflow-y: scroll;
+    }
+    .offcanvas {
+        transform: none !important;
+        visibility: visible !important;
+        top: var(--navbar-height) !important;
+        height: calc(100% - var(--navbar-height)) !important;
+    }
+    .main-content {
+        margin-left: var(--offcanvas-width);
+        padding: 2rem;
+    }
+    .sidebar-toggle {
+        display: none;
+    }
+}
+
+.admin-dropdown-text {
+    max-width: 100px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    display: inline-block;
+}
+
+@media (max-width: 576px) {
+    .admin-dropdown-text {
+        display: none;
+    }
+}
+
+@keyframes fadeOutCollapse {
+    0% { opacity: 1; height: auto; padding: 1rem; margin-bottom: 1rem; }
+    80% { opacity: 0; height: auto; padding: 1rem; margin-bottom: 1rem; }
+    100% { opacity: 0; height: 0; padding: 0; margin-bottom: 0; visibility: hidden; }
+}
+
+.fade-out {
+    animation: fadeOutCollapse 8s forwards; 
+    overflow: hidden; 
+}
+
+/* Add these styles at the end of your existing CSS file */
+
+.welcome-section {
+    padding: 1rem 0;
+}
+
+.welcome-back {
+    color: #2C3E50;
+    font-size: 1.75rem;
+    font-weight: 600;
+    margin-bottom: 0;
+}
+
+.content-section {
+    background-color: white;
+    border-radius: 10px;
+    padding: 1.5rem;
+    box-shadow: 0 0.125rem 0.25rem rgba(0,0,0,0.075);
+    margin-bottom: 2rem;
+}
+
+.table-header {
+    padding-bottom: 1rem;
+}
+
+.stats-card {
+    border-left: 4px solid;
+    height: 100%;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.stats-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0.5rem 1rem rgba(0,0,0,0.15);
+}
+
+.stats-card.primary {
+    border-left-color: #3498DB;
+}
+
+.stats-card.success {
+    border-left-color: #2ECC71;
+}
+
+.stats-card.danger {
+    border-left-color: #E74C3C;
+}
+
+.stats-card .card-icon {
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    font-size: 1.25rem;
+}
+
+.stats-card .primary-bg {
+    background-color: rgba(52, 152, 219, 0.1);
+    color: #3498DB;
+}
+
+.stats-card .success-bg {
+    background-color: rgba(46, 204, 113, 0.1);
+    color: #2ECC71;
+}
+
+.stats-card .danger-bg {
+    background-color: rgba(231, 76, 60, 0.1);
+    color: #E74C3C;
+}
+
+.stats-card h6 {
+    color: #718096;
+    font-weight: 500;
+}
+
+.stats-card h4 {
+    color: #2D3748;
+    font-weight: 600;
+}

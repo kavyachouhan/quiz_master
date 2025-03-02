@@ -1,0 +1,61 @@
+{% extends 'user_base.html' %}
+{% block title %}{{ quiz.title }}{% endblock %}
+
+{% block content %}
+<div class="main-content" style="margin-top: var(--navbar-height);">
+    <div class="content-section">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2>{{ quiz.title }}</h2>
+            <div id="timer" class="h3 text-danger"></div>
+        </div>
+
+        <form id="quizForm" method="POST" action="{{ url_for('submit_quiz') }}">
+            {% for question in questions %}
+            <div class="card mb-4">
+                <div class="card-body">
+                    <h5 class="card-title">Question {{ loop.index }}: {{ question.question_text }}</h5>
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="radio" name="question_{{ question.id }}" value="1" required>
+                        <label class="form-check-label">{{ question.option_1 }}</label>
+                    </div>
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="radio" name="question_{{ question.id }}" value="2">
+                        <label class="form-check-label">{{ question.option_2 }}</label>
+                    </div>
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="radio" name="question_{{ question.id }}" value="3">
+                        <label class="form-check-label">{{ question.option_3 }}</label>
+                    </div>
+                    <div class="form-check mb-2">
+                        <input class="form-check-input" type="radio" name="question_{{ question.id }}" value="4">
+                        <label class="form-check-label">{{ question.option_4 }}</label>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            <button type="submit" class="btn btn-primary">Submit Quiz</button>
+        </form>
+    </div>
+</div>
+
+<script>
+// Timer functionality
+const duration = "{{ quiz.time_duration }}";
+let timeLeft = parseInt(duration) * 60; // Convert to seconds
+
+function updateTimer() {
+    const minutes = Math.floor(timeLeft / 60);
+    const seconds = timeLeft % 60;
+    document.getElementById('timer').textContent = 
+        `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
+    
+    if (timeLeft <= 0) {
+        document.getElementById('quizForm').submit();
+    }
+    timeLeft--;
+}
+
+setInterval(updateTimer, 1000);
+updateTimer();
+</script>
+{% endblock %}

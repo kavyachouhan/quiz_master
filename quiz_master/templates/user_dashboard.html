@@ -1,0 +1,136 @@
+{% extends 'user_base.html' %}
+{% block title %} {{ user.full_name }} Dashboard {% endblock title %}
+{% block content %}
+
+<div class="main-content" style="margin-top: var(--navbar-height);">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <div class="alert alert-{{ category }} fade-out">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+    <!-- Welcome Section -->
+    <div class="welcome-section mb-4">
+        <h2 class="welcome-back">Welcome back, {{ user.full_name }}!</h2>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="row mb-4">
+        <div class="col-lg-4 col-md-4 mb-3">
+            <div class="card stats-card primary h-100">
+                <div class="card-body d-flex align-items-center">
+                    <div class="card-icon primary-bg me-3">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <div>
+                        <h6 class="mb-0">Completed Quizzes</h6>
+                        <h4 class="mt-2 mb-0">{{ completed_quizzes }}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-4 mb-3">
+            <div class="card stats-card success h-100">
+                <div class="card-body d-flex align-items-center">
+                    <div class="card-icon success-bg me-3">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div>
+                        <h6 class="mb-0">Average Score</h6>
+                        <h4 class="mt-2 mb-0">{{ avg_score }}</h4>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 col-md-4 mb-3">
+          <div class="card stats-card danger h-100">
+              <div class="card-body d-flex align-items-center">
+                  <div class="card-icon danger-bg me-3">
+                      <i class="fas fa-trophy"></i>
+                  </div>
+                  <div>
+                      <h6 class="mb-0">Highest Score</h6>
+                      <h4 class="mt-2 mb-0">{{ highest_score }}</h4>
+                  </div>
+              </div>
+          </div>
+      </div>
+    </div>
+
+    <!-- Performance Charts -->
+    <div class="row g-4">
+        <!-- Subject Performance Chart -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Performance by Subject</h5>
+                    <canvas id="subjectPerformanceChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Scores Chart -->
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Recent Quiz Scores</h5>
+                    <canvas id="recentScoresChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+        // Subject Performance Chart
+        new Chart(document.getElementById('subjectPerformanceChart'), {
+            type: 'bar',
+            data: {
+                labels: {{ stats.subject_names|safe }},
+                datasets: [{
+                    label: 'Average Score (%)',
+                    data: {{ stats.subject_scores|safe }},
+                    backgroundColor: '#007bff'
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100
+                    }
+                }
+            }
+        });
+
+        // Recent Scores Chart
+        new Chart(document.getElementById('recentScoresChart'), {
+            type: 'line',
+            data: {
+                labels: {{ stats.recent_dates|safe }},
+                datasets: [{
+                    label: 'Score',
+                    data: {{ stats.recent_scores|safe }},
+                    borderColor: '#20c997',
+                    tension: 0.1,
+                    fill: false
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 100
+                    }
+                }
+            }
+        });
+    </script>
+</div>
+{% endblock content %}

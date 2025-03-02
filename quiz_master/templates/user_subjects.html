@@ -1,0 +1,65 @@
+{% extends 'user_base.html' %}
+{% block title %}Subjects{% endblock %}
+
+{% block content %}
+<div class="main-content" style="margin-top: var(--navbar-height);">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+        {% for category, message in messages %}
+            <div class="alert alert-{{ category }} fade-out">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+    {% endwith %}
+
+    <div class="content-section">
+        <h2 class="mb-4">Available Subjects</h2>
+              <!-- Search Section -->
+              <div class="col-md-6">
+                <form action="{{ url_for('user_subjects') }}" method="GET">
+                    <div class="input-group">
+                        <span class="input-group-text bg-white">
+                            <i class="fas fa-search text-muted"></i>
+                        </span>
+                        <input type="text" class="form-control border-start-0" 
+                                placeholder="Search subjects..." 
+                                name="search" 
+                                value="{{ request.args.get('search', '') }}">
+                        <button type="submit" class="btn btn-primary">Search</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <div class="row">
+          {% if subjects %}
+            {% for subject in subjects %}
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ subject.name }}</h5>
+                        <p class="card-text">{{ subject.description }}</p>
+                        <a href="{{ url_for('user_quizzes') }}" 
+                           class="btn btn-primary">View Quizzes</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+          {% else %}
+          <div class="col-12">
+                  <div class="alert alert-info text-center">
+                      {% if request.args.get('search') %}
+                          <i class="fas fa-search me-2"></i>
+                          No subjects found matching "{{ request.args.get('search') }}"
+                      {% else %}
+                          <i class="fas fa-book me-2"></i>
+                          No subjects available at the moment.
+                      {% endif %}
+                  </div>
+              </div>
+          {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock %}

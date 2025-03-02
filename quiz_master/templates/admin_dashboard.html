@@ -1,0 +1,193 @@
+{% extends 'admin_base.html' %}
+{% block title %} Admin Dashboard {% endblock title %}
+{% block content %}
+
+<!-- Main Content -->
+<div class="main-content" style="margin-top: var(--navbar-height);">
+
+  {% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+      {% for category, message in messages %}
+          <div class="alert alert-{{ category }} fade-out">
+              {{ message }}
+          </div>
+      {% endfor %}
+  {% endif %}
+  {% endwith %}
+ 
+  <!-- Welcome Section -->
+  <div class="welcome-section mb-4">
+    <h2 class="welcome-back">Welcome back, Admin!</h2>
+</div>
+
+  <!-- Stats Cards -->
+  <div class="row g-3 mb-4">
+      <div class="col-12 col-sm-6 col-xl-3">
+          <div class="stat-card">
+              <div class="stat-icon"><i class="fas fa-users"></i></div>
+              <div class="stat-value">{{ total_user }}</div>
+              <div class="stat-label">Total Users</div>
+          </div>
+      </div>
+      <div class="col-12 col-sm-6 col-xl-3">
+          <div class="stat-card">
+              <div class="stat-icon"><i class="fas fa-book"></i></div>
+              <div class="stat-value">{{ total_subjects }}</div>
+              <div class="stat-label">Total Subjects</div>
+          </div>
+      </div>
+      <div class="col-12 col-sm-6 col-xl-3">
+          <div class="stat-card">
+              <div class="stat-icon"><i class="fas fa-question-circle"></i></div>
+              <div class="stat-value">{{ total_quizzes }}</div>
+              <div class="stat-label">Total Quizzes</div>
+          </div>
+      </div>
+      <div class="col-12 col-sm-6 col-xl-3">
+          <div class="stat-card">
+              <div class="stat-icon"><i class="fas fa-trophy"></i></div>
+              <div class="stat-value">{{ average_score }}</div>
+              <div class="stat-label">Average Score</div>
+          </div>
+      </div>
+  </div>
+
+  <!-- Search Section -->
+  <div class="content-section mb-4">
+    <div class="row g-3">
+        <div class="col-md-8">
+            <form action="{{ url_for('admin_dashboard') }}" method="GET">
+                <div class="input-group">
+                    <span class="input-group-text bg-white">
+                        <i class="fas fa-search text-muted"></i>
+                    </span>
+                    <input type="text" class="form-control border-start-0" 
+                          placeholder="Search users..." 
+                          id="searchUser" 
+                          name="search" 
+                          value="{{ request.args.get('search', '') }}">
+                    <button type="submit" class="btn btn-primary">Search</button>
+                    {% if request.args.get('search') %}
+                        <a href="{{ url_for('admin_dashboard') }}" class="btn btn-outline-secondary">
+                            <i class="fas fa-times"></i> Clear
+                        </a>
+                    {% endif %}
+                </div>
+            </form>
+        </div>
+    </div>
+  </div>
+
+  <!-- Users Table -->
+  <div class="users-table">
+      <div class="table-header d-flex justify-content-between align-items-center flex-wrap gap-2">
+          <h5 class="mb-0">User Management</h5>
+      </div>
+      <div class="table-responsive">
+          <table class="table table-hover mb-0">
+              <thead>
+                  <tr>
+                      <th>User ID</th>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Qualification</th>
+                      <th>Status</th>
+                      <th>Actions</th>
+                  </tr>
+              </thead>
+              <tbody>
+                {% if users %}
+                {% for user in users %}
+                  <tr>
+                      <td>#{{ user.id }}</td>
+                      <td>{{ user.full_name }}</td>
+                      <td>{{ user.email }}</td>
+                      <td>{{ user.qualification }}</td>
+                      <td><span class="status-badge status-active">Active</span></td>
+                      <td>
+                        <button class="btn btn-sm btn-primary btn-action" data-bs-toggle="modal" data-bs-target="#userEdit{{ user.id }}">
+                            <i class="fas fa-edit"></i>
+                        </button>
+                        <button class="btn btn-sm btn-danger btn-action" data-bs-toggle="modal" data-bs-target="#userDelete{{ user.id }}">
+                          <i class="fas fa-trash"></i>
+                      </button>
+                      </td>
+                  </tr>
+                  <!-- User Edit Modal -->
+                  <div class="modal fade" id="userEdit{{ user.id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h1 class="modal-title fs-5">Update User</h1>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                <form id="updateForm{{ user.id }}" action="{{ url_for('update_user', user_id=user.id) }}" method="POST">
+                                    <div class="mb-3">
+                                        <label for="fullName{{ user.id }}" class="form-label">Full Name</label>
+                                        <input type="text" class="form-control" id="fullName{{ user.id }}" name="fullName" value="{{ user.full_name }}" >
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label for="email{{ user.id }}" class="form-label">Email address</label>
+                                        <input type="email" class="form-control" id="email{{ user.id }}" name="email" value="{{ user.email }}" >
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label for="qualification{{ user.id }}" class="form-label">Qualification</label>
+                                        <input type="text" class="form-control" id="qualification{{ user.id }}" name="qualification" value="{{ user.qualification }}" >
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label for="dob{{ user.id }}" class="form-label">Date of Birth</label>
+                                        <input type="date" class="form-control" id="dob{{ user.id }}" name="dob" value="{{ user.date_of_birth.strftime('%Y-%m-%d') }}" >
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                <button type="submit" form="updateForm{{ user.id }}" class="btn btn-primary">Update</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- User Delete Modal -->
+                <div class="modal fade" id="userDelete{{ user.id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                  <div class="modal-dialog modal-dialog-centered">
+                      <div class="modal-content">
+                          <div class="modal-header">
+                              <h1 class="modal-title fs-5">Delete User</h1>
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                          </div>
+                          <div class="modal-body">
+                              <p>Are you sure you want to delete user <strong>{{ user.full_name }}</strong>?</p>
+                              <p class="text-danger">This action cannot be undone.</p>
+                          </div>
+                          <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                              <form action="{{ url_for('delete_user', user_id=user.id) }}" method="POST" class="d-inline">
+                                  <button type="submit" class="btn btn-danger">Delete User</button>
+                              </form>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+                {% endfor %}
+                {% else %}
+                    <tr>
+                        <td colspan="6" class="text-center">
+                            {% if request.args.get('search') %}
+                                No users found matching "{{ request.args.get('search') }}"
+                            {% else %}
+                                No users available
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endif %}
+              </tbody>
+          </table>
+      </div>
+  </div>
+</div>
+
+{% endblock content %}

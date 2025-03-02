@@ -1,0 +1,189 @@
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+}
+
+.navbar-custom {
+    background-color: #2C3E50;
+}
+
+.hero-section {
+    background-color: #F8F9FA;
+    display: flex;
+    align-items: center;
+    padding: 2rem 0;
+}
+
+.main-title {
+    color: #2C3E50;
+    font-size: 3.5rem;
+    font-weight: bold;
+    margin-bottom: 2rem;
+}
+
+.btn-custom-primary {
+    background-color: #3498DB;
+    color: white;
+    padding: 0.8rem 2.5rem;
+    font-size: 1.2rem;
+    margin: 0.5rem;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.btn-custom-secondary {
+    background-color: #E74C3C;
+    color: white;
+    padding: 0.8rem 2.5rem;
+    font-size: 1.2rem;
+    margin: 0.5rem;
+    border: none;
+    transition: all 0.3s ease;
+}
+
+.btn-custom-primary:hover {
+    background-color: #2980B9;
+    color: white;
+    transform: translateY(-2px);
+}
+
+.btn-custom-secondary:hover {
+    background-color: #C0392B;
+    color: white;
+    transform: translateY(-2px);
+}
+
+.footer {
+    background-color: #2C3E50;
+    color: white;
+    padding: 1rem 0;
+    margin-top: auto;
+}
+
+.hero-text {
+    color: #7F8C8D;
+    font-size: 1.2rem;
+    margin-bottom: 2rem;
+}
+
+.register-card {
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+}
+
+.register-title {
+    color: #2C3E50;
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.btn-register-custom-primary {
+    background-color: #3498DB;
+    color: white;
+    padding: 0.8rem 2.5rem;
+    font-size: 1.1rem;
+    border: none;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.btn-custom-primary:hover {
+    background-color: #2980B9;
+    transform: translateY(-2px);
+}
+
+.form-control:focus {
+    border-color: #3498DB;
+    box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+}
+
+.login-link {
+    color: #3498DB;
+    text-decoration: none;
+}
+
+.login-link:hover {
+    color: #2980B9;
+    text-decoration: underline;
+}
+
+.form-label {
+    color: #2C3E50;
+    font-weight: 500;
+}
+
+@keyframes fadeOutCollapse {
+    0% { opacity: 1; height: auto; padding: 1rem; margin-bottom: 1rem; }
+    80% { opacity: 0; height: auto; padding: 1rem; margin-bottom: 1rem; }
+    100% { opacity: 0; height: 0; padding: 0; margin-bottom: 0; visibility: hidden; }
+}
+
+.fade-out {
+    animation: fadeOutCollapse 8s forwards; 
+    overflow: hidden; 
+}
+
+.auth-card {
+    background-color: white;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+}
+
+.hero-section, .auth-content, .main-content {
+    flex: 1;  /* This allows the content to grow and push footer down */
+    background-color: #F8F9FA;
+    padding: 2rem 0;
+    display: flex;
+    align-items: center;
+}
+
+.auth-title {
+    color: #2C3E50;
+    font-size: 2rem;
+    font-weight: bold;
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.auth-btn {
+    background-color: #3498DB;
+    color: white;
+    padding: 0.8rem 2.5rem;
+    font-size: 1.1rem;
+    border: none;
+    transition: all 0.3s ease;
+    width: 100%;
+}
+
+.auth-btn:hover {
+    background-color: #2980B9;
+    color: white;
+    transform: translateY(-2px);
+}
+
+.auth-input:focus {
+    border-color: #3498DB;
+    box-shadow: 0 0 0 0.2rem rgba(52, 152, 219, 0.25);
+}
+
+.auth-link {
+    color: #3498DB;
+    text-decoration: none;
+}
+
+.auth-link:hover {
+    color: #2980B9;
+    text-decoration: underline;
+}
+
+.auth-label {
+    color: #2C3E50;
+    font-weight: 500;
+}

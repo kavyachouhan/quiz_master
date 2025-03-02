@@ -1,0 +1,7 @@
+flask
+flask_sqlalchemy
+jinja2
+flask_restful
+python-dotenv 
+python-dateutil
+psycopg2-binary
