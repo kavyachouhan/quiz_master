@@ -3,7 +3,10 @@
     "builds": [
         {
             "src": "quiz_master/app.py",
-            "use": "@vercel/python"
+            "use": "@vercel/python",
+            "config": {
+                "includeFiles": ["quiz_master/**"]
+            }
         }
     ],
     "routes": [
@@ -11,10 +14,5 @@
             "src": "/(.*)",
             "dest": "quiz_master/app.py"
         }
-    ],
-    "functions": {
-        "quiz_master/app.py": {
-            "includeFiles": "quiz_master/**"
-        }
-    }
+    ]
 }
