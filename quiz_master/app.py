@@ -14,7 +14,7 @@ app.config['SECRET_KEY'] = os.getenv('SECRET_KEY')
 db.init_app(app)
 
 with app.app_context():
-    from quiz_master.models.models import *  # Updated import
+    from quiz_master.models.models import *
     db.create_all()
 
     admin_role = Admin.query.filter_by(username = 'admin').first()

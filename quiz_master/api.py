@@ -1,6 +1,6 @@
 from flask_restful import Api, Resource
 from quiz_master.app import app
-from models.models import *
+from quiz_master.models.models import *
 
 api = Api(app)
 

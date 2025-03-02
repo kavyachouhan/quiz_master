@@ -1,6 +1,6 @@
 from app import app
 from flask import render_template, request, redirect, url_for, flash, session
-from models.models import *
+from quiz_master.models.models import *
 from quiz_master.extensions import db
 from werkzeug.security import check_password_hash
 from datetime import datetime
